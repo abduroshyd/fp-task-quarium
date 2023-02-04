@@ -20,7 +20,7 @@ public class InitializeAquarium {
         Random random = new Random();
 
         // Generate a random number of fish between 1 and 5 (inclusive)
-        int fishCount = random.nextInt(AppConfig.MAX_FISH_COUNT) + 1;
+        int fishCount = random.nextInt(AppConfig.MAX_FISH_COUNT) + 2;
 
         // Print a greeting message
         System.out.println(Messages.greetings);

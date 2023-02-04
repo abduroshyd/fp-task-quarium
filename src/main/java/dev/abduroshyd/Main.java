@@ -45,42 +45,9 @@ public class Main {
 
         // Loop until all fish are dead
         while (!fishList.isEmpty()) {
-            systemCommands();
+            meeting();
         }
 
-    }
-
-    /**
-     * A method which performs system commands such as add fish, meeting of fishes, and print fish list.
-     */
-    private static void systemCommands() {
-        printCommandList();
-
-        Scanner in = new Scanner(System.in);
-
-        System.out.print(Messages.selectCommand);
-
-        try {
-            int command = in.nextInt();
-            switch (command) {
-                case 1 -> {
-                    Fish savedFish = addFish();
-                    new CheckAllFishDeadlines(fishList)
-                            .checkAllFishDeadlinesInDifferentThreads(savedFish);
-                }
-                case 2 -> {
-                    meeting();
-                }
-                case 3 -> {
-                    printFishList();
-                }
-                default -> {
-                    warningMessage();
-                }
-            }
-        } catch (InputMismatchException e) {
-            warningMessage();
-        }
     }
 
     /**
@@ -92,54 +59,32 @@ public class Main {
         }
     }
 
-    /**
-     * This method is responsible for conducting a meeting between two fish. If there are less than 2 fish in the list, it will print a message indicating there are no fish left for meeting.
-     * The method will list the fish in the list and ask the user to input the index numbers of the two fish to be met.
-     * If the two selected fish have different genders, a new fish will be added to the list.
-     * If the two selected fish have the same gender or the input is not valid, it will print an error message.
-     */
+
+
     private static void meeting() {
-
-        // Check if there are less than 2 fish in the list
-        if (fishList.size() < 2) {
-            System.out.println(Messages.noMoreFishLeftForMeeting);
-            return;
-        }
-
-        // Printing list of fish with its indices
-        for (int i = 1; i <= fishList.size(); i++) {
-            System.out.println("\033[32m" + i + ")" + " \033[0m" + fishList.get(i - 1));
-        }
-
-        // Scan user input for meeting fish
-        try {
-            Scanner in = new Scanner(System.in);
-            System.out.print(Messages.meetingInfo);
-            String[] fishOrders = in.nextLine().split("\\+");
-
-            // Trying to read valid value from scanner
-            try {
-                // Check if selected fish have different values
-                if (!fishOrders[0].equals(fishOrders[1])) {
-                    Fish first = fishList.get(Integer.parseInt(fishOrders[0]) - 1);
-                    Fish second = fishList.get(Integer.parseInt(fishOrders[1]) - 1);
-                    // Check if selected fish have different genders
-                    if (!first.getMale().equals(second.getMale())) {
-                        Fish fish = addFish();
-                        new CheckAllFishDeadlines(fishList).checkAllFishDeadlinesInDifferentThreads(fish);
-                    } else {
-                        System.out.println(Messages.genderIsNotEqual);
-                    }
-                } else {
-                    System.out.println(Messages.genderIsNotEqual);
-                }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println(Messages.fishAlreadyDied);
+        if (fishList.size() > 1) {
+            Fish first = fishList.get(new Random().nextInt(fishList.size()));
+            Fish second = fishList.get(new Random().nextInt(fishList.size()));
+            if (!first.getMale().equals(second.getMale())) {
+                new CheckAllFishDeadlines(fishList).checkAllFishDeadlinesInDifferentThreads(addFish());
+            } else {
+                System.out.println(Messages.genderIsNotEqual);
             }
-        } catch (NumberFormatException e) {
-            warningMessage();
+        } else {
+            System.out.println(Messages.noMoreFishLeftForMeeting);
         }
 
+        int totalMills = new Random().nextInt(1000);
+
+        int seconds = (totalMills / 100);
+
+        System.out.println(seconds + "s dan keyin yangi uchrashuv bo'lib o'tadi");
+
+        try {
+            Thread.sleep(totalMills);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -164,22 +109,5 @@ public class Main {
         Fish fish = fishList.get(fishList.size() - 1);
         System.out.println(fish + " => " + Messages.successFullySaved);
         return fish;
-    }
-
-    /**
-     * This method prints a warning message.
-     */
-    private static void warningMessage() {
-        System.out.println(Messages.warning);
-    }
-
-    /**
-     * This method prints command list of program
-     */
-    private static void printCommandList() {
-        System.out.println("\033[34m" + "Buyruqlar: " + "\033[0m");
-        System.out.println("1 - Baliq qo'shish ");
-        System.out.println("2 - Uchrashuv ");
-        System.out.println("3 - Baliqlar ro'yxati ");
     }
 }

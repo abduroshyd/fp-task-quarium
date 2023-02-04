@@ -9,8 +9,8 @@ public interface Messages {
     String greetings = "Assalomu alaykum";
     String successFullySaved =  "\033[32m" + "Muvoffaqiyatli saqlandi!" + "\033[0m";
     String noMoreFishLeft = "Akvariumda baliqlar tugab qoldi - !!!";
-    String noMoreFishLeftForMeeting = "Akvariumda baliqlar uchrashuv uchun yetarli emas!";
-    String genderIsNotEqual = "Baliq jisnlari bir-biriga mos emas!";
+    String noMoreFishLeftForMeeting = " Baliqlar uchrashishi kerak edi ammo akvariumda 1 tagina baliq qolgan";
+    String genderIsNotEqual = "Baliqlar uchrashib qolishdi ammo baliq jisnlari bir-biriga mos emas!";
     String fishAlreadyDied = "Baliqlardan biri akvariumda maavjud emas!";
     String outOfCapacity = "Akvarium to'ldi va ishdan chiqdi";
 }
