@@ -74,9 +74,9 @@ public class Main {
             System.out.println(Messages.noMoreFishLeftForMeeting);
         }
 
-        int totalMills = new Random().nextInt(1000);
+        int totalMills = new Random().nextInt(10000);
 
-        int seconds = (totalMills / 100);
+        int seconds = (totalMills / 1000)  % 60;
 
         System.out.println(seconds + "s dan keyin yangi uchrashuv bo'lib o'tadi");
 
